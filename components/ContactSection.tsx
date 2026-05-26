@@ -1,11 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { site } from "@/lib/site";
 import { WhatsAppIcon } from "./WhatsAppFloatingButton";
 
-type Status = "idle" | "submitting" | "success" | "error";
+type Status = "idle" | "success" | "error";
 
 const inputClass =
   "mt-2 w-full rounded-md border border-border bg-surface px-4 py-3 text-ink shadow-sm outline-none placeholder:text-ink-muted/50 focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-bg";
@@ -17,27 +17,47 @@ export default function ContactSection({
   defaultMessage?: string;
 }) {
   const [status, setStatus] = useState<Status>("idle");
-  const formRef = useRef<HTMLFormElement>(null);
+  const [message, setMessage] = useState(defaultMessage);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setStatus("submitting");
-
-    const formData = new FormData(e.currentTarget);
-    const payload = Object.fromEntries(formData.entries());
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error("Request failed");
-      setStatus("success");
-      formRef.current?.reset();
-    } catch {
-      setStatus("error");
+  // Prefill the message when arriving from a product's "Request Quote" link
+  // (?product=…). Read on the client so the page stays fully static.
+  useEffect(() => {
+    const product = new URLSearchParams(window.location.search).get("product");
+    if (product) {
+      setMessage(
+        `I'd like a quote for the ${product}. Please share pricing and customization options.`
+      );
     }
+  }, []);
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const get = (k: string) => String(fd.get(k) ?? "").trim();
+    const name = get("name");
+    const email = get("email");
+
+    if (!name || !email || !message.trim()) {
+      setStatus("error");
+      return;
+    }
+
+    // No backend on static hosting — hand off to the visitor's email client.
+    const subject = `Quote request${get("company") ? ` — ${get("company")}` : ""}`;
+    const body = [
+      `Name: ${name}`,
+      `Company: ${get("company") || "—"}`,
+      `Email: ${email}`,
+      `Phone: ${get("phone") || "—"}`,
+      `Estimated quantity: ${get("quantity") || "—"}`,
+      "",
+      message.trim(),
+    ].join("\n");
+
+    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+    setStatus("success");
   }
 
   const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(
@@ -60,7 +80,7 @@ export default function ContactSection({
 
         <div className="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Form */}
-          <form ref={formRef} onSubmit={handleSubmit} noValidate>
+          <form onSubmit={handleSubmit} noValidate>
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div>
                 <label htmlFor="name" className={labelClass}>
@@ -144,7 +164,8 @@ export default function ContactSection({
                   name="message"
                   required
                   rows={4}
-                  defaultValue={defaultMessage}
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   className={inputClass}
                   placeholder="Occasion, products you have in mind, budget, deadline…"
                 />
@@ -152,15 +173,10 @@ export default function ContactSection({
             </div>
 
             <div className="mt-6 flex flex-wrap items-center gap-4">
-              <button
-                type="submit"
-                disabled={status === "submitting"}
-                className="btn-primary disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {status === "submitting" ? "Sending…" : "Request a Quote"}
+              <button type="submit" className="btn-primary">
+                Request a Quote
               </button>
 
-              {/* Live region for screen readers */}
               <p
                 role="status"
                 aria-live="polite"
@@ -173,9 +189,9 @@ export default function ContactSection({
                 }
               >
                 {status === "success" &&
-                  "Thanks — we've received your request and will reply within 24 hours."}
+                  "Thanks! Your email app should open with your request pre-filled — just hit send. Prefer chat? Message us on WhatsApp."}
                 {status === "error" &&
-                  "Something went wrong. Please try again or reach us on WhatsApp."}
+                  "Please add your name, email, and a short message before sending."}
               </p>
             </div>
           </form>

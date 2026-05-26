@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 
 // Placeholder client marks. Replace the files in /public/logos with real,
 // permission-cleared client logos and update the names below.
@@ -22,7 +23,7 @@ export default function TrustStrip() {
           {clients.map((client) => (
             <li key={client.name}>
               <Image
-                src={client.src}
+                src={asset(client.src)}
                 alt={`${client.name} logo`}
                 width={160}
                 height={48}

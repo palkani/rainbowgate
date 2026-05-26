@@ -153,15 +153,38 @@ value in one place and the whole site follows.
 
 ---
 
-## Deploy to Vercel
+## Deploy
 
-1. Push this repo to GitHub/GitLab/Bitbucket.
-2. In [Vercel](https://vercel.com/new), import the repo. Framework preset is
-   auto-detected as **Next.js** — no configuration needed.
-3. Deploy. (Or from the CLI: `npm i -g vercel && vercel deploy`.)
-4. Add your custom domain and update `site.url` in `lib/site.ts` to match.
+### GitHub Pages (current setup — static demo)
 
-No environment variables are required for the current build.
+This repo is configured to **export a fully static site** and publish it to
+GitHub Pages via GitHub Actions.
+
+- [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) builds with
+  `PAGES=true` (which turns on `output: export` + the `/rainbowgate` base path)
+  and deploys `./out` on every push to `main`.
+- One-time setup: in the repo, go to **Settings → Pages → Build and deployment
+  → Source: GitHub Actions**. The next push deploys automatically.
+- Live URL: **https://palkani.github.io/rainbowgate/**
+
+Because Pages is static (no server), the contact form opens the visitor's email
+client via `mailto:` instead of posting to an API. The base path is set in
+[`next.config.mjs`](next.config.mjs) — change `rainbowgate` there (and in the
+workflow) if the repo name changes.
+
+Preview the static build locally:
+
+```bash
+PAGES=true npm run build   # outputs ./out
+npx serve out              # then open the printed URL
+```
+
+### Deploy to Vercel (if you want a live backend)
+
+For a real contact-form backend and image optimization, deploy to a Node host
+instead. Import the repo at [vercel.com/new](https://vercel.com/new) (Next.js is
+auto-detected). You'll want to remove `output: "export"`/`basePath` from
+`next.config.mjs` and restore a contact API route (see TODOs).
 
 ---
 
@@ -169,10 +192,11 @@ No environment variables are required for the current build.
 
 These are intentionally left for the client/next developer:
 
-1. **Real form backend.** `app/api/contact/route.ts` validates and logs leads
-   but does not send email yet. Wire up [Resend](https://resend.com) or
-   SendGrid (a ready-to-paste Resend snippet is in the route file) and add the
-   API key as a Vercel environment variable.
+1. **Real form backend.** The contact form currently hands off to the visitor's
+   email client via `mailto:` (static hosting has no server). For a real inbox
+   integration, deploy to Vercel and add an API route that uses
+   [Resend](https://resend.com) or SendGrid (an earlier `app/api/contact`
+   implementation is preserved in git history at the first commit).
 2. **Real imagery.** Swap every placeholder in `public/` for real product
    photography, client logos, a team photo, and a text-bearing OG image. In
    particular, shoot the flagship **Employee Welcome Kit**

@@ -2,13 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { formatINR, type Product } from "@/lib/products";
+import { asset } from "@/lib/asset";
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
     <article className="group flex flex-col overflow-hidden rounded-lg border border-border bg-surface shadow-sm transition-all duration-200 ease-out hover:shadow-md">
       <div className="relative aspect-square overflow-hidden">
         <Image
-          src={product.image}
+          src={asset(product.image)}
           alt={product.imageAlt}
           fill
           sizes="(min-width: 1024px) 24vw, (min-width: 640px) 30vw, 45vw"

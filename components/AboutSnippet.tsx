@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { asset } from "@/lib/asset";
 
 export default function AboutSnippet() {
   return (
@@ -8,7 +9,7 @@ export default function AboutSnippet() {
       <div className="container-px grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div className="relative aspect-square overflow-hidden rounded-lg shadow-md">
           <Image
-            src="/team.svg"
+            src={asset("/team.svg")}
             alt="The Rainbow Gate team preparing branded corporate gift orders at their Chennai workshop"
             fill
             sizes="(min-width: 1024px) 45vw, 100vw"

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, Heart, Leaf, Sparkles, Truck } from "lucide-react";
 import { formatINR, productBySlug } from "@/lib/products";
+import { asset } from "@/lib/asset";
 import LeafMotif from "./LeafMotif";
 
 const kit = productBySlug("employee-welcome-kit");
@@ -33,7 +34,7 @@ export default function WelcomeKit() {
           {/* Visual */}
           <div className="relative aspect-square overflow-hidden rounded-lg shadow-md">
             <Image
-              src={kit?.image ?? "/products/employee-welcome-kit.svg"}
+              src={asset(kit?.image ?? "/products/employee-welcome-kit.svg")}
               alt={
                 kit?.imageAlt ??
                 "Eco-friendly employee welcome kit in recyclable kraft packaging"

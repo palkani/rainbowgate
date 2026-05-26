@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { asset } from "@/lib/asset";
 import LeafMotif from "./LeafMotif";
 
 export default function Hero() {
@@ -31,7 +32,7 @@ export default function Hero() {
 
         <div className="relative aspect-[4/3] overflow-hidden rounded-lg shadow-md lg:aspect-[5/6]">
           <Image
-            src="/hero.svg"
+            src={asset("/hero.svg")}
             alt="An arrangement of branded corporate gifts — drinkware, notebooks and a gift set — prepared for a client presentation"
             fill
             priority

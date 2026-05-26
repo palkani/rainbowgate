@@ -8,19 +8,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-export default function ContactPage({
-  searchParams,
-}: {
-  searchParams: { product?: string | string[] };
-}) {
-  const productParam = Array.isArray(searchParams.product)
-    ? searchParams.product[0]
-    : searchParams.product;
-
-  const defaultMessage = productParam
-    ? `I'd like a quote for the ${productParam}. Please share pricing and customization options.`
-    : "";
-
+export default function ContactPage() {
   return (
     <>
       <section className="bg-bg">
@@ -36,7 +24,7 @@ export default function ContactPage({
         </div>
       </section>
 
-      <ContactSection defaultMessage={defaultMessage} />
+      <ContactSection />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { categories } from "@/lib/products";
+import { asset } from "@/lib/asset";
 
 export default function Categories() {
   return (
@@ -22,7 +23,7 @@ export default function Categories() {
               >
                 <div className="relative aspect-[3/4] overflow-hidden">
                   <Image
-                    src={category.image}
+                    src={asset(category.image)}
                     alt={category.imageAlt}
                     fill
                     sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
