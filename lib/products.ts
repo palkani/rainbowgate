@@ -264,7 +264,7 @@ export const products: Product[] = [
     moq: 100,
     categorySlug: "tech-desk",
     description: "Swivel USB drive (8–64 GB) with a printed or engraved logo.",
-    image: "/products/usb-flash-drive.svg",
+    image: "/products/usb-flash-drive.jpg",
     imageAlt: "Branded swivel USB flash drive with a printed corporate logo",
   },
   {
@@ -274,7 +274,7 @@ export const products: Product[] = [
     moq: 100,
     categorySlug: "drinkware",
     description: "Squeezable BPA-free sports bottle in a full range of colours.",
-    image: "/products/sports-water-bottle.svg",
+    image: "/products/sports-water-bottle.jpg",
     imageAlt: "Branded squeezable sports water bottle for corporate giveaways",
   },
   {
@@ -284,7 +284,7 @@ export const products: Product[] = [
     moq: 250,
     categorySlug: "writing",
     description: "Smooth click pen with a full-colour barrel and printed logo.",
-    image: "/products/logo-pen.svg",
+    image: "/products/logo-pen.jpg",
     imageAlt: "Branded plastic click pen with a coloured barrel and printed logo",
   },
   {
@@ -294,7 +294,7 @@ export const products: Product[] = [
     moq: 50,
     categorySlug: "lifestyle",
     description: "Wind-resistant umbrella with a large branded canopy panel.",
-    image: "/products/promotional-umbrella.svg",
+    image: "/products/promotional-umbrella.jpg",
     imageAlt: "Branded promotional umbrella with a printed canopy",
   },
   {
@@ -304,7 +304,7 @@ export const products: Product[] = [
     moq: 50,
     categorySlug: "bags",
     description: "Padded laptop messenger bag with an embroidered or printed logo.",
-    image: "/products/laptop-messenger-bag.svg",
+    image: "/products/laptop-messenger-bag.jpg",
     imageAlt: "Branded padded laptop messenger bag with an embroidered logo",
   },
   {
@@ -314,7 +314,7 @@ export const products: Product[] = [
     moq: 100,
     categorySlug: "apparel",
     description: "Structured cotton cap with embroidered front logo, all colours.",
-    image: "/products/baseball-cap.svg",
+    image: "/products/baseball-cap.jpg",
     imageAlt: "Branded structured baseball cap with an embroidered front logo",
   },
   {
@@ -324,7 +324,7 @@ export const products: Product[] = [
     moq: 200,
     categorySlug: "lifestyle",
     description: "Soft foam stress ball printed with your logo — a desk favourite.",
-    image: "/products/stress-ball.svg",
+    image: "/products/stress-ball.jpg",
     imageAlt: "Branded soft foam stress ball printed with a corporate logo",
   },
 ];
