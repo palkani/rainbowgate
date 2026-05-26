@@ -132,16 +132,37 @@ function gateMotif(w, h) {
   )}" fill="${GOLD}" fill-opacity="0.8"/>`;
 }
 
-function glyphMotif(key, w, h) {
+function glyphMotif(key, w, h, stroke = GOLD) {
   const min = Math.min(w, h);
   const s = (0.4 * min) / 90;
   return `<g transform="translate(${w / 2} ${h * 0.4}) scale(${s})"
-    fill="none" stroke="${GOLD}" stroke-opacity="0.9" stroke-width="1.5"
+    fill="none" stroke="${stroke}" stroke-opacity="0.9" stroke-width="1.5"
     stroke-linecap="round" stroke-linejoin="round">${GLYPHS[key] ?? ""}</g>`;
 }
 
-function placeholderSVG({ w, h, label, eyebrow = "Rainbow Gate", variant = 0, glyph }) {
-  const [c1, c2] = GRADIENTS[variant % GRADIENTS.length];
+/**
+ * theme "dark"  → deep-green gradient with gold line-art + white label
+ *                 (hero, team, category tiles)
+ * theme "light" → white ground with green line-art + ink label
+ *                 (product tiles — matches the white background of real
+ *                 product photos so the catalog grid stays uniform)
+ */
+function placeholderSVG({
+  w,
+  h,
+  label,
+  eyebrow = "Rainbow Gate",
+  variant = 0,
+  glyph,
+  theme = "dark",
+}) {
+  const light = theme === "light";
+  const [c1, c2] = light
+    ? ["#FFFFFF", "#FAFAF7"]
+    : GRADIENTS[variant % GRADIENTS.length];
+  const motifStroke = light ? "#1B4332" : GOLD;
+  const labelFill = light ? "#1A1A1A" : "#FFFFFF";
+  const eyebrowFill = light ? "#1B4332" : GOLD;
   const cx = w / 2;
   const labelSize = Math.round(Math.min(w, h) * 0.055);
   const eyebrowSize = Math.round(Math.min(w, h) * 0.024);
@@ -154,13 +175,13 @@ function placeholderSVG({ w, h, label, eyebrow = "Rainbow Gate", variant = 0, gl
     </linearGradient>
   </defs>
   <rect width="${w}" height="${h}" fill="url(#bg)"/>
-  ${glyph ? glyphMotif(glyph, w, h) : gateMotif(w, h)}
+  ${glyph ? glyphMotif(glyph, w, h, motifStroke) : gateMotif(w, h)}
   ${
     label
-      ? `<text x="${cx}" y="${h * 0.82}" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="${labelSize}" fill="#FFFFFF" fill-opacity="0.92">${esc(
+      ? `<text x="${cx}" y="${h * 0.82}" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="${labelSize}" fill="${labelFill}" fill-opacity="0.95">${esc(
           label
         )}</text>
-  <text x="${cx}" y="${h * 0.88}" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="${eyebrowSize}" letter-spacing="${eyebrowSize * 0.18}" fill="${GOLD}" fill-opacity="0.9">${esc(
+  <text x="${cx}" y="${h * 0.88}" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="${eyebrowSize}" letter-spacing="${eyebrowSize * 0.18}" fill="${eyebrowFill}" fill-opacity="0.9">${esc(
           eyebrow.toUpperCase()
         )}</text>`
       : ""
@@ -219,6 +240,10 @@ categoryTiles.forEach(([slug, label, glyph], i) => {
 });
 
 // ---- Product tiles (1:1) ------------------------------------------------
+// Light theme (white ground) so these sit uniformly beside real product
+// photos. The 7 promotional products (usb, umbrella, pen, stress ball,
+// sports bottle, messenger bag, cap) now use real .jpg photos and are not
+// generated here — re-add them if you ever need their placeholders back.
 
 const productTiles = [
   ["bamboo-water-bottle", "Bamboo Bottle", "bottle"],
@@ -234,18 +259,11 @@ const productTiles = [
   ["bamboo-coffee-cup", "Bamboo Cup", "cup"],
   ["cork-cover-notebook", "Cork Notebook", "notebook"],
   ["bamboo-pen", "Bamboo Pen", "pen"],
-  ["usb-flash-drive", "USB Drive", "usb"],
-  ["promotional-umbrella", "Umbrella", "umbrella"],
-  ["logo-pen", "Logo Pen", "pen"],
-  ["stress-ball", "Stress Ball", "ball"],
-  ["sports-water-bottle", "Sports Bottle", "bottle"],
-  ["laptop-messenger-bag", "Messenger Bag", "messenger"],
-  ["baseball-cap", "Baseball Cap", "cap"],
 ];
 productTiles.forEach(([slug, label, glyph], i) => {
   write(
     `products/${slug}.svg`,
-    placeholderSVG({ w: 1000, h: 1000, label, variant: i, glyph })
+    placeholderSVG({ w: 1000, h: 1000, label, variant: i, glyph, theme: "light" })
   );
 });
 

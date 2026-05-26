@@ -45,8 +45,6 @@ export interface Product {
   image: string;
   /** Descriptive alt text — never leave generic. */
   imageAlt: string;
-  /** Surfaced in the homepage "Featured" grid when true. */
-  featured?: boolean;
 }
 
 export const categories: Category[] = [
@@ -125,7 +123,6 @@ export const products: Product[] = [
     description: "Stainless steel core with a natural bamboo sleeve and laser-etched logo.",
     image: "/products/bamboo-water-bottle.svg",
     imageAlt: "Bamboo-sleeved stainless steel corporate water bottle",
-    featured: true,
   },
   {
     slug: "eco-friendly-gift-set",
@@ -136,7 +133,6 @@ export const products: Product[] = [
     description: "Recycled-material notebook, seed pen and jute pouch in a kraft box.",
     image: "/products/eco-friendly-gift-set.svg",
     imageAlt: "Eco friendly corporate gift set with recycled notebook and seed pen",
-    featured: true,
   },
   {
     slug: "premium-notebook",
@@ -147,7 +143,6 @@ export const products: Product[] = [
     description: "A5 hardcover with debossed logo, elastic closure and ribbon marker.",
     image: "/products/premium-notebook.svg",
     imageAlt: "Premium A5 hardcover corporate notebook with debossed logo",
-    featured: true,
   },
   {
     slug: "branded-tote-bag",
@@ -158,7 +153,6 @@ export const products: Product[] = [
     description: "Heavyweight cotton canvas tote with a full-colour print area.",
     image: "/products/branded-tote-bag.svg",
     imageAlt: "Branded cotton canvas corporate tote bag",
-    featured: true,
   },
   {
     slug: "steel-tumbler-set",
@@ -169,7 +163,6 @@ export const products: Product[] = [
     description: "Double-walled vacuum tumblers, set of two, in a gift sleeve.",
     image: "/products/steel-tumbler-set.svg",
     imageAlt: "Double-walled stainless steel corporate tumbler set",
-    featured: true,
   },
   {
     slug: "desk-organizer",
@@ -180,7 +173,6 @@ export const products: Product[] = [
     description: "Multi-slot wooden organiser for pens, cards and devices.",
     image: "/products/desk-organizer.svg",
     imageAlt: "Wooden corporate desk organiser with multiple slots",
-    featured: true,
   },
   {
     slug: "wireless-charger",
@@ -191,7 +183,6 @@ export const products: Product[] = [
     description: "Fast 15W wireless pad with a printed or engraved brand area.",
     image: "/products/wireless-charger.svg",
     imageAlt: "Branded 15W wireless charging pad for corporate gifting",
-    featured: true,
   },
   {
     slug: "festive-gift-hamper",
@@ -202,7 +193,6 @@ export const products: Product[] = [
     description: "Premium festive box of treats and keepsakes, fully customisable.",
     image: "/products/festive-gift-hamper.svg",
     imageAlt: "Premium festive corporate gift hamper in branded packaging",
-    featured: true,
   },
   // Eco "Employee Welcome Kit" line — featured in its own homepage spotlight.
   {
@@ -329,7 +319,25 @@ export const products: Product[] = [
   },
 ];
 
-export const featuredProducts: Product[] = products.filter((p) => p.featured);
+/**
+ * Curated homepage "Bestsellers" grid — an explicit, ordered set of 8 that
+ * leads with the real-photo promotional range (across categories) and closes
+ * with an eco gift set. Edit this list to change what shows on the homepage.
+ */
+const FEATURED_SLUGS: string[] = [
+  "usb-flash-drive",
+  "sports-water-bottle",
+  "laptop-messenger-bag",
+  "baseball-cap",
+  "promotional-umbrella",
+  "logo-pen",
+  "stress-ball",
+  "eco-friendly-gift-set",
+];
+
+export const featuredProducts: Product[] = FEATURED_SLUGS.map(
+  (slug) => products.find((p) => p.slug === slug)!
+).filter(Boolean);
 
 /** Format an INR price for display, e.g. 1500 -> "₹1,500". */
 export function formatINR(amount: number): string {
