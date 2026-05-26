@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 720" fill="none">
+  <!--
+    Rainbowgate Logo — Primary Lockup
+    Editable SVG source. Adjust colors via the <defs> gradients.
+    Brand colors:
+      Blue:   #2C5F94 (deep) / #4A85C2 (light)
+      Orange: #E37416 (deep) / #F4A14A (light)
+      Red:    #C73A2C (deep) / #EC5A4D (light)
+  -->
+  <defs>
+    <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4A85C2"/>
+      <stop offset="100%" stop-color="#2C5F94"/>
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F4A14A"/>
+      <stop offset="100%" stop-color="#E37416"/>
+    </linearGradient>
+    <linearGradient id="redGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#EC5A4D"/>
+      <stop offset="100%" stop-color="#C73A2C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Three concentric gothic arches sharing baseline y=470, apex y=70 -->
+  <path d="M 120 470 L 120 320 A 200 280 0 0 1 300 70 A 200 280 0 0 1 480 320 L 480 470"
+        stroke="url(#blueGrad)" stroke-width="18" stroke-linecap="round" fill="none"/>
+  <path d="M 175 470 L 175 335 A 145 240 0 0 1 300 130 A 145 240 0 0 1 425 335 L 425 470"
+        stroke="url(#orangeGrad)" stroke-width="17" stroke-linecap="round" fill="none"/>
+  <path d="M 230 470 L 230 350 A 90 200 0 0 1 300 190 A 90 200 0 0 1 370 350 L 370 470"
+        stroke="url(#redGrad)" stroke-width="16" stroke-linecap="round" fill="none"/>
+
+  <!-- Star of David, centered -->
+  <g transform="translate(300, 400)" stroke="#2C5F94" stroke-width="2.5" stroke-linejoin="round" fill="none">
+    <path d="M 0 -32 L 28 16 L -28 16 Z"/>
+    <path d="M 0 32 L 28 -16 L -28 -16 Z"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="300" y="585" text-anchor="middle"
+        font-family="Georgia, 'Playfair Display', 'Times New Roman', serif"
+        font-size="54"
+        font-style="italic"
+        font-weight="500">
+    <tspan fill="#2C5F94">Rainbow</tspan><tspan fill="#E37416">gate</tspan>
+  </text>
+
+  <!-- Tagline -->
+  <text x="300" y="630" text-anchor="middle"
+        font-family="'Helvetica Neue', Arial, sans-serif"
+        font-size="13"
+        font-weight="600"
+        letter-spacing="6"
+        fill="#8896A4">PROMOTIONAL  PRODUCTS</text>
+</svg>

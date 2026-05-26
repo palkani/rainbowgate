@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 56" width="220" height="56" role="img">
+  <g fill="#C9A961">
+    <rect x="0" y="14" width="28" height="28" rx="6"/>
+    <text x="14" y="34" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#FFFFFF">L</text>
+    <text x="40" y="36" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" letter-spacing="-0.5">Lumen</text>
+  </g>
+</svg>

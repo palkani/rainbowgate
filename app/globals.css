@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Brand system — elegant, premium, eco-aligned.
+     Rainbow only lives in the name, never as literal color fills. */
+  --color-bg: #faf8f3; /* warm ivory */
+  --color-surface: #ffffff;
+  --color-ink: #1a1a1a;
+  --color-ink-muted: #4a4a4a;
+  --color-brand: #1b4332; /* deep forest green */
+  --color-brand-soft: #2d5f4a;
+  --color-accent: #c9a961; /* warm gold — highlights only */
+  --color-border: #e8e4dc;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Consistent, visible focus treatment across the site. */
+  :focus-visible {
+    outline: none;
+    @apply ring-2 ring-brand ring-offset-2 ring-offset-bg;
+  }
+
+  ::selection {
+    background-color: var(--color-brand);
+    color: #ffffff;
+  }
+}
+
+@layer components {
+  .container-px {
+    @apply mx-auto max-w-7xl px-6 lg:px-10;
+  }
+
+  .section-py {
+    @apply py-20 md:py-28 lg:py-32;
+  }
+
+  .eyebrow {
+    @apply font-serif text-sm uppercase tracking-[0.18em] text-brand;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-medium text-white transition-colors duration-200 ease-out hover:bg-brand-soft;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink px-6 py-3 text-sm font-medium text-ink transition-colors duration-200 ease-out hover:bg-ink hover:text-white;
+  }
+}
